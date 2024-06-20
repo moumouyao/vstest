@@ -42,7 +42,7 @@
 			],
 			"detail": "Burn with OpenOCD"
 		},
-		{
+		{	/*连接设备*/
 			"type": "shell",
 			"label": "OpenOCD",                                                                                                                 
 			"command": "openocd",
