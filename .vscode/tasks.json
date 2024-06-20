@@ -7,7 +7,7 @@
 			"command": "if (!(Test-Path build)) {mkdir build}",
 			"detail": "Create new folder \"build\""
 		},
-		{/**/
+		{/*编译工程*/
 			"type":"shell",
 			"label": "Build",
 			"command": "mingw32-make",
