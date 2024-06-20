@@ -1,0 +1,58 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{/*创建build，用于存放编译过程文件*/
+			"type": "shell",
+			"label": "Create BUILD-DIR",
+			"command": "if (!(Test-Path build)) {mkdir build}",
+			"detail": "Create new folder \"build\""
+		},
+		{/**/
+			"type":"shell",
+			"label": "Build",
+			"command": "mingw32-make",
+			"dependsOn": "Create BUILD-DIR",
+			"args": [
+				"-j"
+			],
+			"detail": "Build with mingw32-make.exe"
+		},
+		{/*清理工程*/
+			"type":"shell",
+			"label": "Clean",
+			"command": "rm",
+			"args": [
+				"-r",
+				"build"
+			],
+			"detail": "Delete folder \"build\" and its content"
+		},
+ 
+		{
+			"type": "shell",
+			"label": "Burn",
+			"command": "openocd",
+			"args": [
+				"-f",
+				"interface/stlink-v2.cfg",
+				"-f",
+				"target/stm32f4x.cfg",//target
+				"-c",
+				"program build/vstest.bin verify reset exit 0x08000000"//烧录指令 _NAME_工程的名字
+			],
+			"detail": "Burn with OpenOCD"
+		},
+		{
+			"type": "shell",
+			"label": "OpenOCD",                                                                                                                 
+			"command": "openocd",
+			"args": [                                                                                                           
+				"-f",
+				"interface/stlink-v2.cfg",//下载器
+				"-f",
+				"target/stm32f4x.cfg"//target 芯片型号
+			],
+			"detail": "start OpenOCD and wait for gdb"
+		}
+	]
+}
